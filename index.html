@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.1.0"></script>
+
+<body>
+<h1 id ="Title">APY Calculator V1</h1>
+<a href="https://peakd.com/@cryptothesis/">@cryptothesis on Hive</a>
+<p id ="Title2">This plots the monthly amount accumulated based on principal investment and DCA amount at a particular APY for 12 months. Hover over the data points on the charts to check values. </p>
+<p id ="Title3">Work in progress. DO NOT USE THIS INFO FOR INVESTMENT DECISIONS!</p>
+<p>Disclaimer: The data and information generated may not be accurate.</p>
+<form id="update" action="/action_page.php">
+  Principal: <input type="text" id="principal" value="100"><br><br>
+  APY (%): <input type="text" id="rate" value="8"><br><br>
+  DCA : <input type="text" id="dca" value="10"><br><br>
+  <input type="button" onclick="update()" value="Plot APY">
+</form>
+
+<p id = "outcome"></p>
+<canvas id="myChart" style="width:100%;max-width:1600px"></canvas>
+</body>
+
+
+<script>
+// https://blog.oliverjumpertz.dev/the-moving-average-simple-and-exponential-theory-math-and-implementation-in-javascript
+//https://www.tutorialspoint.com/calculate-compound-interest-in-javascript
+
+function render(principal,rate,dca){
+
+  principal = Number(principal);
+  rate = Number(rate);
+  dca = Number(dca);
+  
+  console.log(dca);
+  var rate2 = rate/100;
+  var amount2 = (principal * rate2 / 12) + principal + dca;
+  var amount3 = (amount2 * rate2 / 12) + amount2 + dca;
+  var amount4 = (amount3 * rate2 / 12) + amount3 + dca;
+  var amount5 = (amount4 * rate2 / 12) + amount4 + dca;
+  var amount6 = (amount5 * rate2 / 12) + amount5 + dca;
+  var amount7 = (amount6 * rate2 / 12) + amount6 + dca;
+  var amount8 = (amount7 * rate2 / 12) + amount7 + dca;
+  var amount9 = (amount8 * rate2 / 12) + amount8 + dca;
+  var amount10 = (amount9 * rate2 / 12) + amount9 + dca;
+  var amount11 = (amount10 * rate2 / 12) + amount10 + dca;
+  var amount12 = (amount11 * rate2 / 12) + amount11 + dca;
+  var amount13 = (amount12 * rate2 / 12) + amount12 + dca;
+
+  var xValues = [0,1,2,3,4,5,6,7,8,9,10,11,12];
+  var yValues = [principal.toFixed(2),amount2.toFixed(2),amount3.toFixed(2),amount4.toFixed(2),amount5.toFixed(2),amount6.toFixed(2),amount7.toFixed(2),amount8.toFixed(2),amount9.toFixed(2),amount10.toFixed(2),amount11.toFixed(2),amount12.toFixed(2), amount13.toFixed(2)];
+  document.getElementById("outcome").innerHTML = "Accumulated amount at month 12: " + amount13.toFixed(2);
+   
+new Chart("myChart", {
+  type: "line",
+  data: {
+    labels: xValues,
+    datasets: [{
+      fill: false,
+      lineTension: 0,
+      backgroundColor: "rgba(0,0,255,1.0)",
+      borderColor: "rgba(0,0,255,0.1)",
+      data: yValues
+    }]
+  },
+  options: {
+    legend: {display: false}
+  }
+
+
+});
+
+
+}
+
+function update() {
+  
+  var principal = document.getElementById("principal").value;
+  var rate = document.getElementById("rate").value; 
+  var dca = document.getElementById("dca").value; 
+
+
+  //document.getElementById("demo").innerHTML = x;
+
+  render(principal,rate,dca);
+
+}
+
+
+
+</script>
